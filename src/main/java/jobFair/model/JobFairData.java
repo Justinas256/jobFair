@@ -42,6 +42,12 @@ public class JobFairData implements Serializable{
         this.location = location;
     }
 
+    public JobFairData(String name, String date, String location) {
+        this.name = name;
+        this.date = date;
+        this.location = location;
+    }
+
     public JobFairData() {
     }
 
