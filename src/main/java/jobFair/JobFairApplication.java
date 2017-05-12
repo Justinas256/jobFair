@@ -1,4 +1,4 @@
-package com.ucll.jobFair;
+package jobFair;
 
 import org.springframework.boot.SpringApplication;
 import org.springframework.boot.autoconfigure.SpringBootApplication;

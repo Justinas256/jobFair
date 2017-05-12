@@ -31,5 +31,5 @@ dependencies {
 }
 
 if (!hasProperty('mainClass')) {
-    ext.mainClass = 'com.ucll.jobFair.JobFairApplication'
+    ext.mainClass = 'jobFair.JobFairApplication'
 }
