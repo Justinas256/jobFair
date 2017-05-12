@@ -38,4 +38,15 @@ public class JobFairDataService {
         repository.save(jobFairData);
     } 
     
+    public JobFairData geJobFairDataById(long id) {
+        return repository.findOne(id);
+    }
+    
+    public void deleteJobFairDataById(long jobFairDataId) {
+	repository.delete(jobFairDataId);
+    }
+    
+    public void delete(JobFairData jobFairData) {
+	repository.delete(jobFairData);
+    }
 }
