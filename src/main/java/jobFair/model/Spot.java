@@ -22,6 +22,9 @@ public class Spot implements Serializable {
     @Id
     @GeneratedValue(strategy = GenerationType.AUTO)
     private Long id;
+    
+    @Column 
+    private String spotNo;
 
     @Column
     private int tables;
@@ -35,12 +38,29 @@ public class Spot implements Serializable {
     @Column
     private String remarks;
 
-    public Spot(Long id, int tables, int chairs, boolean electricity, String remarks) {
+    public Spot(Long id, String spotNo, int tables, int chairs, boolean electricity, String remarks) {
         this.id = id;
+        this.spotNo = spotNo;
         this.tables = tables;
         this.chairs = chairs;
         this.electricity = electricity;
         this.remarks = remarks;
+    }
+
+    public Spot(String spotNo, int tables, int chairs, boolean electricity, String remarks) {
+        this.spotNo = spotNo;
+        this.tables = tables;
+        this.chairs = chairs;
+        this.electricity = electricity;
+        this.remarks = remarks;
+    }
+
+    public String getSpotNo() {
+        return spotNo;
+    }
+
+    public void setSpotNo(String spotNo) {
+        this.spotNo = spotNo;
     }
 
     public Spot() {
