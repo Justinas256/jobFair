@@ -5,6 +5,8 @@
  */
 package jobFair.service;
 
+import java.util.ArrayList;
+import java.util.List;
 import javax.transaction.Transactional;
 import jobFair.dao.SpotRepository;
 import jobFair.model.Spot;
@@ -28,4 +30,23 @@ public class SpotService {
         repository.save(spot);
     }
     
+    public List<Spot> findAll() {
+        List<Spot> spots = new ArrayList<>();
+        for(Spot spot: repository.findAll()) {
+            spots.add(spot);
+	}
+        return spots; 
+    }
+    
+    public Spot geSpotById(long id) {
+        return repository.findOne(id);
+    }
+    
+    public void deleteSpotById(long spotId) {
+	repository.delete(spotId);
+    }
+    
+    public void delete(Spot spot) {
+	repository.delete(spot);
+    }
 }
