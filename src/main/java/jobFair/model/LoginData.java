@@ -44,6 +44,13 @@ public class LoginData implements Serializable {
         this.salt = salt;
         this.role = role;
     }
+    
+    public LoginData(String username, String password, String salt, String role) {
+        this.username = username;
+        this.password = password;
+        this.salt = salt;
+        this.role = role;
+    }
 
     public LoginData() {
     }
