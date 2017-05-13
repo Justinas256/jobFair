@@ -27,12 +27,13 @@
 </div>
 <div class="row">
 	<div class="col-xs-12 col-sm-12 col-md-8 col-lg-6">
-		<form method="POST" action="Controller?action=setdate">
+		<form method="POST" action="setdeadline">
+			<input type="hidden" name="${_csrf.parameterName}" value="${_csrf.token}"/>
 			<legend><i class="fa fa-clock-o"></i> Verander eind datum</legend>
 		<div class="form-group form-inline">
 			<p>Vanaf deze datum zullen geregistreerde bedrijven geen wijzigingen meer kunnen toepassen op hun reservering.</p>
-			<label for="datum">Eind datum:  </label>
-			<input type="text" name="datum" class="form-control" id="datum" placeholder="dd-mm-yyyy">
+			<label for="date">Eind datum:  </label>
+			<input type="text" name="date" class="form-control" id="date" placeholder="dd-mm-yyyy">
 			<button type="submit" class="btn btn-primary" value="Toepassen">Toepassen</button>
 			</div>
 		</form>

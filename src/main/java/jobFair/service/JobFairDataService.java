@@ -6,6 +6,7 @@
 package jobFair.service;
 
 import java.util.ArrayList;
+import java.util.Date;
 import java.util.List;
 import javax.transaction.Transactional;
 import jobFair.dao.JobFairDataRepository;
@@ -34,6 +35,14 @@ public class JobFairDataService {
         return jobFairs; 
     }
     
+    public JobFairData getJobFair() {
+         List<JobFairData> jobFairs = this.findAll();
+         if(jobFairs.size() > 0) {
+             return jobFairs.get(0);
+         } 
+         return null;
+    }
+    
     public void save(JobFairData jobFairData) {
         repository.save(jobFairData);
     } 
@@ -49,4 +58,11 @@ public class JobFairDataService {
     public void delete(JobFairData jobFairData) {
 	repository.delete(jobFairData);
     }
+    
+    public void updateDeadline(Date date){
+        JobFairData jobFair = this.getJobFair();
+        jobFair.setDeadline(date);
+        this.save(jobFair);
+    }
+    
 }
