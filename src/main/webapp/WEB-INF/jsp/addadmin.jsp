@@ -12,8 +12,9 @@
 	
 <div class="row">
     <div class="col-xs-12 col-sm-12 col-md-8 col-lg-6">
-        <form:form method="POST" action="addadmin" modelAttibute="admin" modelAttibute="adminlogindata">
+        <form:form method="POST" action="addadmin" modelAttibute="admin">
             <legend>Nieuwe beheerder toevoegen</legend>
+            <form:errors path="*" modelAttibute="errors"/>
             <div class="form-group">
                     <label for="username">Gebruikersnaam: </label>
                     <form:input path="username" type="text" class="form-control" id="username" name="username" value='<c:out value="${prevID}"></c:out>'>
