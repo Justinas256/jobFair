@@ -24,6 +24,16 @@ import org.hibernate.validator.constraints.NotEmpty;
  *
  * @author justinas
  */
+/*@NotNullIfAnotherFieldHasValue.List({
+    @NotNullIfAnotherFieldHasValue(
+        fieldName = "status",
+        fieldValue = "Canceled",
+        dependFieldName = "fieldOne"),
+    @NotNullIfAnotherFieldHasValue(
+        fieldName = "status",
+        fieldValue = "Canceled",
+        dependFieldName = "fieldTwo")
+})*/
 @Entity
 public class Users implements Serializable {
 
