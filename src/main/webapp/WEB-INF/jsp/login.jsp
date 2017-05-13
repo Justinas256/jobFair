@@ -10,8 +10,7 @@
 <div class="row">
 	<div class="col-xs-12 col-sm-12 col-md-8 col-lg-6">
 		<form action="/login" method="post">
-			<input type="hidden" name="${_csrf.parameterName}"
-			value="${_csrf.token}" />
+			<input type="hidden" name="${_csrf.parameterName}" value="${_csrf.token}" />
 		
 			<legend class="sr-only">Login Form</legend>
 			<div class="form-group">

@@ -6,8 +6,11 @@
 package jobFair.controller;
 
 import java.util.List;
+import jobFair.model.LoginData;
 import jobFair.model.Spot;
+import jobFair.service.LoginDataService;
 import jobFair.service.SpotService;
+import jobFair.service.UsersService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
 import org.springframework.web.bind.annotation.GetMapping;
@@ -23,6 +26,12 @@ public class SpotsController {
     @Autowired
     private SpotService spotService;
     
+    @Autowired
+    private UsersService usersService;
+    
+     @Autowired
+    private LoginDataService loginDataService;
+    
     @GetMapping("/spots")
     public ModelAndView getSpotsList() {
         ModelAndView model = new ModelAndView("spotoverview");
@@ -33,14 +42,18 @@ public class SpotsController {
     
     
     @GetMapping("/fill")
-    public void fillDatabase() {
+    public String fillDatabase() {
         this.createData();
+        return "login";
     }
     
     
     public void createData() {
         spotService.save(new Spot("!", 2,3,true,"cool"));
         spotService.save(new Spot("2", 1,1,false,"oh yeah!"));
+        
+        loginDataService.save(new LoginData("adminm", "admin", "", "ADMIN"));
+        
     }
     
     
