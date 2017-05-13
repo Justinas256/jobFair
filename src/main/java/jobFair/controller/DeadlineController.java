@@ -5,21 +5,17 @@
  */
 package jobFair.controller;
 
-import java.sql.Date;
 import java.text.SimpleDateFormat;
 import java.util.ArrayList;
+import java.util.Date;
 import java.util.List;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
-import jobFair.model.Spot;
 import jobFair.service.JobFairDataService;
-import jobFair.service.SpotService;
 import jobFair.utils.StringToCalendar;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
-import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PostMapping;
-import org.springframework.web.servlet.ModelAndView;
 
 /**
  *
@@ -35,7 +31,9 @@ public class DeadlineController {
     public String setDeadline(HttpServletRequest request, HttpServletResponse response) {
         List<String> errors = new ArrayList<>();
         
-        StringToCalendar toCalendar = new StringToCalendar(request.getParameter("datum"));
+        String date = request.getParameter("date");
+        
+        StringToCalendar toCalendar = new StringToCalendar(date);
         Date deadline = toCalendar.getDateFormat(errors);
         
         if (errors.size() > 0) {

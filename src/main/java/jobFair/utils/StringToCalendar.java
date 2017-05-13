@@ -5,8 +5,8 @@
  */
 package jobFair.utils;
 
-import java.sql.Date;
 import java.util.Calendar;
+import java.util.Date;
 import java.util.List;
 
 /**
@@ -62,6 +62,9 @@ public class StringToCalendar {
     
     public Date getDateFormat(List<String> errors) {
         Calendar calendar = this.getDate(errors);
+        if(errors.size() > 0) {
+            return null;
+        }
         return (Date) calendar.getTime();
     }
 }

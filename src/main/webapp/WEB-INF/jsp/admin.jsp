@@ -28,6 +28,7 @@
 <div class="row">
 	<div class="col-xs-12 col-sm-12 col-md-8 col-lg-6">
 		<form method="POST" action="setdeadline">
+			<input type="hidden" name="${_csrf.parameterName}" value="${_csrf.token}"/>
 			<legend><i class="fa fa-clock-o"></i> Verander eind datum</legend>
 		<div class="form-group form-inline">
 			<p>Vanaf deze datum zullen geregistreerde bedrijven geen wijzigingen meer kunnen toepassen op hun reservering.</p>
