@@ -15,7 +15,9 @@ import jobFair.service.JobFairDataService;
 import jobFair.utils.StringToCalendar;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
+import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.PostMapping;
+import org.springframework.web.bind.annotation.RequestParam;
 
 /**
  *
@@ -28,23 +30,21 @@ public class DeadlineController {
     private JobFairDataService jobFairDataService;
     
     @PostMapping("/setdeadline")
-    public String setDeadline(HttpServletRequest request, HttpServletResponse response) {
+    public String setDeadline(@RequestParam("date") String date, Model model) {
         List<String> errors = new ArrayList<>();
-        
-        String date = request.getParameter("date");
         
         StringToCalendar toCalendar = new StringToCalendar(date);
         Date deadline = toCalendar.getDateFormat(errors);
         
         if (errors.size() > 0) {
-            request.setAttribute("errors", errors);
+            model.addAttribute("errors", errors);
         } else {
             jobFairDataService.updateDeadline(deadline);
             String dateStr = new SimpleDateFormat("EEEE").format(deadline) + " "
                 + new SimpleDateFormat("dd").format(deadline) + " "
                 + new SimpleDateFormat("MMMM").format(deadline) + " "
                 + new SimpleDateFormat("yyyy").format(deadline);
-            request.setAttribute("success", "Je hebt de deadline gewijzigd naar: " + dateStr); 
+            model.addAttribute("success", "Je hebt de deadline gewijzigd naar: " + dateStr); 
         }
         return "admin";
     }
