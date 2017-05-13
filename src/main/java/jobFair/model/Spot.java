@@ -11,6 +11,8 @@ import javax.persistence.Entity;
 import javax.persistence.GeneratedValue;
 import javax.persistence.GenerationType;
 import javax.persistence.Id;
+import javax.persistence.JoinColumn;
+import javax.persistence.ManyToOne;
 
 /**
  *
@@ -37,24 +39,38 @@ public class Spot implements Serializable {
     
     @Column
     private String remarks;
+   
+    @ManyToOne
+    @JoinColumn(name = "user_spots_id")
+    private Users user;
 
-    public Spot(Long id, String spotNo, int tables, int chairs, boolean electricity, String remarks) {
+    public Spot(Long id, String spotNo, int tables, int chairs, boolean electricity, String remarks, Users user) {
         this.id = id;
         this.spotNo = spotNo;
         this.tables = tables;
         this.chairs = chairs;
         this.electricity = electricity;
         this.remarks = remarks;
+        this.user = user;
     }
 
-    public Spot(String spotNo, int tables, int chairs, boolean electricity, String remarks) {
+    public Spot(String spotNo, int tables, int chairs, boolean electricity, String remarks, Users user) {
         this.spotNo = spotNo;
         this.tables = tables;
         this.chairs = chairs;
         this.electricity = electricity;
         this.remarks = remarks;
+        this.user = user;
     }
 
+    public Users getUser() {
+        return user;
+    }
+
+    public void setUser(Users user) {
+        this.user = user;
+    }
+    
     public String getSpotNo() {
         return spotNo;
     }

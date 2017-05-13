@@ -9,6 +9,7 @@ import java.util.ArrayList;
 import java.util.List;
 import javax.transaction.Transactional;
 import jobFair.dao.UsersRepository;
+import jobFair.model.Spot;
 import jobFair.model.Users;
 import org.springframework.stereotype.Service;
 
@@ -50,4 +51,29 @@ public class UsersService {
     public void delete(Users user) {
 	repository.delete(user);
     }
+    
+    public void addSpot(Long userId, Spot spot) {
+        Users user = this.geUserById(userId);
+        user.addSpot(spot);
+        repository.save(user);   
+    }
+    
+     public void deleteSpot(Long userId, Spot spot) {
+        Users user = this.geUserById(userId);
+        user.deleteSpot(spot.getId());
+        repository.save(user);   
+    }
+    
+    public List<Users> usersWithoutSpot() {
+        List<Users> users = this.findAll();
+        List<Users> noSpotUsers = new ArrayList<>();
+        
+        for(Users user: users) {
+            if(user.getSpots() == null || user.getSpots().isEmpty()) {
+                noSpotUsers.add(user);
+            }
+        }
+        return noSpotUsers;
+    }
+     
 }

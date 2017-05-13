@@ -17,9 +17,9 @@
 				<th> </th>
 				
 				<th><a href="spots">Alle plaatsen </a></th>
-				<th><a href="Controller?action=vrijelijst">Vrije plaatsen </a></th>
-				<th><a href="Controller?action=bezetlijst">Bezette plaatsen</a></th>
-				<th><a href="Controller?action=alfabetischelijst">Bezette plaatsen op alfabetische volgorde</a></th>
+				<th><a href="freespots">Vrije plaatsen </a></th>
+				<th><a href="takenspots">Bezette plaatsen</a></th>
+				<th><a href="sorttakenspots">Bezette plaatsen op alfabetische volgorde</a></th>
 			</tr>
 			<c:forEach var="spot" items="${spots}">
 				<tr>
@@ -27,7 +27,7 @@
                                         <td><a href="Controller?action=showopt&id=<c:out value="${spot.spotID}"/>">${spot.spotID}</a></td>
                                     --%>
                                         <td><a href="Controller?action=showopt&id=<c:out value="${spot.id}"/>">${spot.spotNo}</a></td>
-					<td>to do</td>
+					<td>${spot.user.companyName}</td>
 					<td></td>
 					<td></td>
 					<td></td>

@@ -14,6 +14,7 @@ import jobFair.service.SpotService;
 import jobFair.service.UsersService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
+import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.servlet.ModelAndView;
 
@@ -41,6 +42,27 @@ public class SpotsController {
         return model;
     }
     
+    @GetMapping("/freespots")
+    public String getFreeSpots(Model model) {
+        List<Spot> spots = spotService.freeSpots();
+        model.addAttribute("spots", spots);
+        return "spotoverview";
+    }
+    
+    @GetMapping("/takenspots")
+    public String getTakenSpots(Model model) {
+        List<Spot> spots = spotService.takenSpots();
+        model.addAttribute("spots", spots);
+        return "spotoverview";
+    }
+    
+    @GetMapping("/sorttakenspots")
+    public String getSortedTakenSpots(Model model) {
+        List<Spot> spots = spotService.sortTakenSpots();
+        model.addAttribute("spots", spots);
+        return "spotoverview";
+    }
+    
     
     @GetMapping("/fill")
     public String fillDatabase() {
@@ -50,9 +72,11 @@ public class SpotsController {
     
     
     public void createData() {
-        spotService.save(new Spot("!", 2,3,true,"cool"));
-        spotService.save(new Spot("2", 1,1,false,"oh yeah!"));
+        spotService.save(new Spot("!", 2,3,true,"cool", null));
+        spotService.save(new Spot("2", 1,1,false,"oh yeah!", null));
         
+        usersService.save(new Users("Name", "Company", "email@gmail.com", "user", "pass", "", "COMPANY", null));
+   
         Users user = new Users();
         user.setPassword("admin");
         user.setRole("ADMIN");

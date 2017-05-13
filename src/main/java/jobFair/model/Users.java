@@ -11,12 +11,15 @@ import java.math.BigInteger;
 import java.security.MessageDigest;
 import java.security.NoSuchAlgorithmException;
 import java.security.SecureRandom;
+import java.util.ArrayList;
+import java.util.List;
 import java.util.Random;
 import javax.persistence.Column;
 import javax.persistence.Entity;
 import javax.persistence.GeneratedValue;
 import javax.persistence.GenerationType;
 import javax.persistence.Id;
+import javax.persistence.OneToMany;
 import org.hibernate.validator.constraints.Email;
 import org.hibernate.validator.constraints.NotEmpty;
 
@@ -67,14 +70,10 @@ public class Users implements Serializable {
     @Column
     private String role;
     
-    public Users(Long id, String contactName, String companyName, String email) {
-        this.id = id;
-        this.contactName = contactName;
-        this.companyName = companyName;
-        this.email = email;
-    }
+    @OneToMany(mappedBy = "user")
+    private List<Spot> spots; 
 
-    public Users(Long id, String contactName, String companyName, String email, String username, String password, String salt, String role) {
+    public Users(Long id, String contactName, String companyName, String email, String username, String password, String salt, String role, List<Spot> spots) {
         this.id = id;
         this.contactName = contactName;
         this.companyName = companyName;
@@ -83,6 +82,41 @@ public class Users implements Serializable {
         this.password = password;
         this.salt = salt;
         this.role = role;
+        this.spots = spots;
+    }
+
+    public Users(String contactName, String companyName, String email, String username, String password, String salt, String role, List<Spot> spots) {
+        this.contactName = contactName;
+        this.companyName = companyName;
+        this.email = email;
+        this.username = username;
+        this.password = password;
+        this.salt = salt;
+        this.role = role;
+        this.spots = spots;
+    }
+
+    public void addSpot(Spot spot) {
+        if(this.spots == null) {
+            spots = new ArrayList<Spot>();
+        }
+        spots.add(spot);
+    }
+    
+    public void deleteSpot(Long spotId) {
+        for(Spot spot: spots) {
+            if(spot.getId().equals(id)) {
+                spots.remove(spot);
+            }
+        }
+    }
+    
+    public List<Spot> getSpots() {
+        return spots;
+    }
+
+    public void setSpots(List<Spot> spots) {
+        this.spots = spots;
     }
     
     public Users() {
