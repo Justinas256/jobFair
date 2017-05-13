@@ -6,6 +6,7 @@
 package jobFair.model;
 
 import java.io.Serializable;
+import java.sql.Date;
 import javax.persistence.Column;
 import javax.persistence.Entity;
 import javax.persistence.GeneratedValue;
@@ -34,18 +35,31 @@ public class JobFairData implements Serializable{
     
     @Column
     private String location;
+    
+    @Column
+    private Date deadline;
 
-    public JobFairData(Long ID, String name, String date, String location) {
+    public JobFairData(Long ID, String name, String date, String location, Date deadline) {
         this.ID = ID;
         this.name = name;
         this.date = date;
         this.location = location;
+        this.deadline = deadline;
     }
 
-    public JobFairData(String name, String date, String location) {
+    public JobFairData(String name, String date, String location, Date deadline) {
         this.name = name;
         this.date = date;
         this.location = location;
+        this.deadline = deadline;
+    }
+
+    public Date getDeadline() {
+        return deadline;
+    }
+
+    public void setDeadline(Date deadline) {
+        this.deadline = deadline;
     }
 
     public JobFairData() {
