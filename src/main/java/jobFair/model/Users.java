@@ -6,11 +6,19 @@
 package jobFair.model;
 
 import java.io.Serializable;
+import java.io.UnsupportedEncodingException;
+import java.math.BigInteger;
+import java.security.MessageDigest;
+import java.security.NoSuchAlgorithmException;
+import java.security.SecureRandom;
+import java.util.Random;
 import javax.persistence.Column;
 import javax.persistence.Entity;
 import javax.persistence.GeneratedValue;
 import javax.persistence.GenerationType;
 import javax.persistence.Id;
+import org.hibernate.validator.constraints.Email;
+import org.hibernate.validator.constraints.NotEmpty;
 
 /**
  *
@@ -25,26 +33,53 @@ public class Users implements Serializable {
     private Long id;
  
     @Column
-    private String contactNumber;
+    @NotEmpty(message="Gelieve een contactpersoon op te geven.")
+    private String contactName;
     
-    @Column 
+    @Column
+    @NotEmpty(message="Gelieve een bedrijfsnaam op te geven.")
     private String companyName;
     
     @Column
+    @NotEmpty(message=("Er is geen email gegeven"))
+    @Email(message="Email heeft niet het juiste formaat")
     private String email;
-
-    public Users(Long id, String contactNumber, String companyName, String email) {
+    
+    @Column
+    private String username; 
+    
+    @Column
+    private String password;
+    
+    @Column
+    private String salt;
+    
+    @Column
+    private String role;
+    
+    public Users(Long id, String contactName, String companyName, String email) {
         this.id = id;
-        this.contactNumber = contactNumber;
+        this.contactName = contactName;
         this.companyName = companyName;
         this.email = email;
     }
 
+    public Users(Long id, String contactName, String companyName, String email, String username, String password, String salt, String role) {
+        this.id = id;
+        this.contactName = contactName;
+        this.companyName = companyName;
+        this.email = email;
+        this.username = username;
+        this.password = password;
+        this.salt = salt;
+        this.role = role;
+    }
+    
     public Users() {
     }
 
-    public String getContactNumber() {
-        return contactNumber;
+    public String getContactName() {
+        return contactName;
     }
 
     public String getCompanyName() {
@@ -55,8 +90,8 @@ public class Users implements Serializable {
         return email;
     }
 
-    public void setContactNumber(String contactNumber) {
-        this.contactNumber = contactNumber;
+    public void setContactName(String contactName) {
+        this.contactName = contactName;
     }
 
     public void setCompanyName(String companyName) {
@@ -75,8 +110,37 @@ public class Users implements Serializable {
         this.id = id;
     }
 
-    
-    
+    public void setUsername(String username) {
+        this.username = username;
+    }
+
+    public void setPassword(String password) {
+        this.password = password;
+    }
+
+    public void setSalt(String salt) {
+        this.salt = salt;
+    }
+
+    public void setRole(String role) {
+        this.role = role;
+    }
+
+    public String getUsername() {
+        return username;
+    }
+
+    public String getPassword() {
+        return password;
+    }
+
+    public String getSalt() {
+        return salt;
+    }
+
+    public String getRole() {
+        return role;
+    } 
 
     @Override
     public int hashCode() {
@@ -102,5 +166,46 @@ public class Users implements Serializable {
     public String toString() {
         return "jobFair.model.Users[ id=" + id + " ]";
     }
+    
+    public void setPasswordHashed(@NotEmpty(message="Geen wachtwoord gegeven") String password) {
+        try {
+            if (this.getSalt() == null) {
+                this.createSalt();
+            }
+            this.password = this.hashPassword(password);
+        } catch (Exception e) {
+            throw new IllegalArgumentException("Systeem kon geen hashed wachtwoord creeren");
+        }
+    }
+
+    public String hashPassword(String password) throws NoSuchAlgorithmException, UnsupportedEncodingException {
+        MessageDigest crypt = MessageDigest.getInstance("SHA-1");
+        crypt.reset();
+
+        crypt.update(this.getSalt().getBytes("UTF-8"));
+        crypt.update(password.getBytes("UTF-8"));
+
+        byte[] digest = crypt.digest();
+        return new BigInteger(1, digest).toString(16);
+    }
+    
+    private void createSalt() {
+        SecureRandom random = new SecureRandom();
+        byte seed[] = random.generateSeed(20);
+        this.setSalt(new BigInteger(1, seed).toString(16));
+    }
+    
+    public String generatePassword(){
+       SecureRandom random = new SecureRandom();
+       String clearPass = new BigInteger(50, random).toString(32);
+       this.setPasswordHashed(clearPass);
+       return clearPass;
+   }
+
+    public void generateUserId(@NotEmpty(message="Er kon geen gebruikersnaam gegenereerd worden.") String user){
+       Random random = new Random();
+       String userID = user + random.nextInt(999);
+       this.setUsername(userID.replace(" ", ""));
+   }
     
 }

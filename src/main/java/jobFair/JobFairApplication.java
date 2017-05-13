@@ -14,7 +14,7 @@ public class JobFairApplication {
         
         //jobFairDataService.save(new JobFairData("2017 JOB FAIR", "2017-12-12", "Leuven"));
         
-	public static void main(String[] args) {
-            SpringApplication.run(JobFairApplication.class, args);
-	}
+	public static void main(String[] args) {  
+            SpringApplication.run(JobFairApplication.class, args);           
+	}       
 }
